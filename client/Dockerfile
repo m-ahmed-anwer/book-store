@@ -26,13 +26,13 @@ ENV NODE_ENV=production
 WORKDIR /app
 
 # Copy only the necessary files from the build stage
-COPY --from=builder /app/package.json /app/package-lock.json ./
+COPY --from=builder /app/package.json ./
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/next.config.mjs ./
 
 # Install only production dependencies
-RUN npm install --only=production
+RUN npm install --production
 
 # Expose the port that the app will run on
 EXPOSE 3000
