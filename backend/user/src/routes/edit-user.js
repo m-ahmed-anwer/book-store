@@ -1,8 +1,6 @@
 import "dotenv/config";
 import express from "express";
-import jwt from "jsonwebtoken";
 import { body, validationResult } from "express-validator";
-import bcrypt from "bcryptjs";
 import User from "../model/user.js";
 
 const router = express.Router();
@@ -11,7 +9,7 @@ router.post(
   "/api/users/editUser/:id",
   [
     body("name").trim().notEmpty().withMessage("You must supply a name"),
-    body("image").trim().notEmpty().withMessage("You must supply a image"),
+    body("image").trim().notEmpty().withMessage("You must supply an image"),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -27,20 +25,26 @@ router.post(
     const { name, image } = req.body;
     const id = req.params.id;
 
-    const existingUser = await User.User.findById(id);
+    try {
+      const existingUser = await User.User.findById(id);
 
-    if (!existingUser) {
-      return res.status(400).json({
-        errors: [{ message: "User not found" }],
-      });
+      if (!existingUser) {
+        return res.status(404).json({
+          errors: [{ message: "User not found" }],
+        });
+      }
+
+      existingUser.name = name;
+      existingUser.image = image;
+
+      await existingUser.save();
+
+      return res.status(200).send(existingUser);
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: "Server error while updating user" });
     }
-
-    existingUser.name = name;
-    existingUser.image = image;
-
-    await existingUser.save();
-
-    res.status(201).send(existingUser);
   }
 );
 

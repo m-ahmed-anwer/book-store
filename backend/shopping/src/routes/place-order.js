@@ -27,34 +27,46 @@ const publishMessage = async (topicName, payload) => {
       .publishMessage({ data: dataBuffer });
     return messageId;
   } catch (error) {
-    console.error(`Received error while publishing: ${error.message}`);
     return null;
   }
 };
 
 router.post("/api/order", UserAuth, async (req, res, next) => {
-  const _id = req.user.id;
+  const customerId = req.user.id;
 
-  const data = await CreateNewOrder(_id);
+  try {
+    const data = await CreateNewOrder(customerId);
 
-  if (!data) {
-    return res
-      .status(404)
-      .send({ message: "Order creation failed, No items on Cart" });
+    if (!data) {
+      return res
+        .status(404)
+        .send({ message: "Order creation failed, no items in cart" });
+    }
+
+    const payload = await GetOrderPayload(customerId, data, "CREATE_ORDER");
+
+    if (!payload) {
+      return res.status(404).send({ message: "Order payload creation failed" });
+    }
+
+    const messageId = await publishMessage(
+      process.env.GOOGLE_CLOUD_PUBSUB_TOPIC_NAME,
+      payload
+    );
+
+    if (!messageId) {
+      return res
+        .status(500)
+        .send({ message: "Failed to publish order message" });
+    }
+
+    return res.status(201).json({ data, messageId });
+  } catch (error) {
+    return res.status(500).send({
+      message: "Server error while placing order",
+      error: error.message,
+    });
   }
-
-  const payload = await GetOrderPayload(_id, data, "CREATE_ORDER");
-
-  if (!payload) {
-    return res.status(404).send({ message: "Order payload creation failed" });
-  }
-
-  const message = await publishMessage(
-    process.env.GOOGLE_CLOUD_PUBSUB_TOPIC_NAME,
-    payload
-  );
-
-  return res.status(200).json({ data, message });
 });
 
 export { router as placeOrderRouter };

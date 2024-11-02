@@ -20,31 +20,37 @@ router.put("/api/product/create", upload.single("image"), async (req, res) => {
   const { title, author, description, price } = req.body;
 
   try {
-    const data = await product.Product.create({
+    const newProduct = await product.Product.create({
       title,
       author,
       description,
       price,
     });
-    const productResult = await data.save();
-    productResult._id = productResult._id.toString();
 
     if (req.file) {
       const params = {
         Bucket: process.env.AWS_BUCKET_NAME,
-        Key: `products/${productResult._id}/${req.file.originalname}`,
+        Key: `products/${newProduct._id}/${req.file.originalname}`,
         Body: req.file.buffer,
         ContentType: req.file.mimetype,
       };
 
-      const s3Upload = await s3.upload(params).promise();
-      productResult.image = s3Upload.Location;
-      await productResult.save();
+      try {
+        const s3Upload = await s3.upload(params).promise();
+        newProduct.image = s3Upload.Location;
+        await newProduct.save();
+      } catch (s3Error) {
+        return res
+          .status(500)
+          .send({ message: "Failed to upload image", s3Error });
+      }
     }
 
-    res.status(201).send({ productResult, message: "Product created" });
+    res
+      .status(201)
+      .send({ product: newProduct, message: "Product created successfully" });
   } catch (error) {
-    res.status(500).send({ message: "Product not created", error });
+    res.status(500).send({ message: "Product creation failed", error });
   }
 });
 

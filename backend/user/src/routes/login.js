@@ -29,43 +29,54 @@ router.post(
 
     const { email, password } = req.body;
 
-    const existingUser = await User.User.findOne({ email });
-    if (!existingUser) {
-      return res.status(400).json({
-        errors: [{ message: "User not found" }],
-      });
-    }
-
-    const passwordsMatch = await bcrypt.compare(
-      password,
-      existingUser.password
-    );
-    if (!passwordsMatch) {
-      return res.status(400).json({
-        errors: [{ message: "Password does not match" }],
-      });
-    }
-
-    const userJwt = jwt.sign(
-      {
-        id: existingUser.id,
-        email: existingUser.email,
-        image: existingUser.image,
-      },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "30d",
+    try {
+      const existingUser = await User.User.findOne({ email });
+      if (!existingUser) {
+        return res.status(401).json({
+          errors: [{ message: "Invalid email or password" }],
+        });
       }
-    );
 
-    res.cookie("session", userJwt, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-    });
+      const passwordsMatch = await bcrypt.compare(
+        password,
+        existingUser.password
+      );
+      if (!passwordsMatch) {
+        return res.status(401).json({
+          errors: [{ message: "Invalid email or password" }],
+        });
+      }
 
-    res.status(200).send(existingUser);
+      const userJwt = jwt.sign(
+        {
+          id: existingUser.id,
+          email: existingUser.email,
+          image: existingUser.image,
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "30d",
+        }
+      );
+
+      res.cookie("session", userJwt, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+      });
+
+      res.status(200).json({
+        message: "Login successful",
+        user: {
+          id: existingUser.id,
+          email: existingUser.email,
+          image: existingUser.image,
+        },
+      });
+    } catch (error) {
+      res.status(500).send({ message: "Internal server error" });
+    }
   }
 );
 

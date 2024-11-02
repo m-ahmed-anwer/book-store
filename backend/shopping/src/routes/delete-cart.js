@@ -8,12 +8,22 @@ router.delete("/api/cart/:itemId", UserAuth, async (req, res, next) => {
   const customerId = req.user.id;
   const { itemId } = req.params;
 
-  const response = await RemoveFromCart(customerId, itemId);
+  if (!itemId) {
+    return res.status(400).json({ message: "Item ID is required" });
+  }
 
-  if (response.success) {
-    return res.status(200).json({ message: response.message });
-  } else {
-    return res.status(404).json({ message: response.message });
+  try {
+    const response = await RemoveFromCart(customerId, itemId);
+
+    if (response.success) {
+      return res.status(200).json({ message: response.message });
+    } else {
+      return res.status(404).json({ message: response.message });
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Server error while removing item from cart", error });
   }
 });
 

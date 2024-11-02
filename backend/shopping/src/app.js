@@ -34,8 +34,6 @@ app.use(removeFromCartRouter);
 app.use(getCartRouter);
 app.use(getOrderRouter);
 app.use(placeOrderRouter);
-app.use(testRouter);
-
 app.all("*", async (req, res) => {
   res.status(404).send({ message: "Page not found" });
 });

@@ -8,7 +8,13 @@ router.get(
   currentUser,
   requireAuth,
   async (req, res) => {
-    res.send({ currentUser: req.currentUser || null });
+    try {
+      res.status(200).send({ currentUser: req.currentUser || null });
+    } catch (error) {
+      res
+        .status(500)
+        .send({ message: "Server error while fetching current user" });
+    }
   }
 );
 
