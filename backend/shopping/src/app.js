@@ -7,7 +7,6 @@ import { addToCartRouter } from "./routes/add-to-cart.js";
 import { removeFromCartRouter } from "./routes/delete-cart.js";
 import { getCartRouter } from "./routes/get-cart.js";
 import { getOrderRouter } from "./routes/get-orders.js";
-import { testRouter } from "./routes/test.js";
 import { placeOrderRouter } from "./routes/place-order.js";
 
 const app = express();
