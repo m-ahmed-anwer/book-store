@@ -5,8 +5,8 @@ on:
     branches:
       - main 
     paths:
-      - 'client/**
-      - '.github/workflows/client_deploy.yaml' 
+      - 'client/**'
+      - '.github/workflows/client_deploy.yaml'
 
 jobs:
   build-and-deploy:
