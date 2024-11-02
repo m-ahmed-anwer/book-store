@@ -8,6 +8,8 @@ RUN npm install
 
 COPY . .
 
+WORKDIR /app/src
+
 EXPOSE 8001
 
 CMD ["npm", "start"]

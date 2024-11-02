@@ -1,4 +1,4 @@
-name: Build and Deploy Client to Cloud Run
+name: Build and Deploy Shopping Service
 
 on:
   push:
