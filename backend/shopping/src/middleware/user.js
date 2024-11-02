@@ -8,11 +8,9 @@ const currentUser = (req, res, next) => {
   if (!token) {
     return next();
   }
-
   if (!process.env.JWT_SECRET) {
     throw new Error("JWT_SECRET must be defined");
   }
-
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     req.currentUser = payload;
