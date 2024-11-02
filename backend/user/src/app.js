@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:8000",
+    origin: "https://gateway-639859377017.us-central1.run.app",
     credentials: true,
   })
 );
