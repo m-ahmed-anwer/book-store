@@ -48,6 +48,7 @@ router.post(
       res.status(201).send(user);
     } catch (error) {
       res.status(500).json({ message: "Internal server error" });
+    
     }
   }
 );
