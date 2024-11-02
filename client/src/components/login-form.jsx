@@ -46,7 +46,7 @@ const LoginForm = ({ onSubmit }) => {
       </button>
       <div className="mt-4 text-center">
         <span className="label-text">
-          Don't have an account?{" "}
+          {`Don't have an account?`}
           <Link href="/auth/signup" className="text-primary font-semibold">
             Signup
           </Link>

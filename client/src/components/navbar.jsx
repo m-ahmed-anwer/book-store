@@ -4,6 +4,7 @@ import Link from "next/link";
 import CartIcon from "./cart-icon-navbar";
 import CartBadge from "./cart-badge";
 import { cookies } from "next/headers";
+import Image from "next/image";
 
 const Navbar = async () => {
   // const cookie = await cookies().get("authorization");
@@ -59,7 +60,7 @@ const Navbar = async () => {
                 className="btn btn-ghost btn-circle avatar "
               >
                 <div className="w-10 rounded-full">
-                  <img
+                  <Image
                     alt="Profile"
                     src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
                   />

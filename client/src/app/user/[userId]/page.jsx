@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { HiOutlinePencilAlt } from "react-icons/hi"; // Importing a pencil icon from react-icons
+import Image from "next/image";
 
 // Sample user data (you can replace this with actual data fetching logic)
 const userData = {
@@ -29,7 +30,6 @@ const UserPage = async ({ params }) => {
   return (
     <div className="min-h-screen bg-base-300 sm:p-8 ">
       <div className="max-w-4xl mx-auto bg-base-200 shadow-lg rounded-lg p-6 relative">
-      
         <Link href={`/user/${userId}/edit`}>
           <HiOutlinePencilAlt
             className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 cursor-pointer"
@@ -37,9 +37,8 @@ const UserPage = async ({ params }) => {
           />
         </Link>
 
-      
         <div className="flex items-center space-x-4 mb-8">
-          <img
+          <Image
             src={user.profileImage}
             alt="Profile Image"
             width={100}

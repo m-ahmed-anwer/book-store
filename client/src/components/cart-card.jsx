@@ -3,6 +3,7 @@ import {
   incrementItem,
   removeItemFromCart,
 } from "@/store/cartSlice";
+import Image from "next/image";
 import React from "react";
 import { GoTrash } from "react-icons/go";
 
@@ -13,7 +14,7 @@ const CartCard = ({ cartItem, dispatch }) => {
 
   return (
     <div className="mb-6 flex flex-col sm:flex-row justify-between rounded-lg bg-base-100 p-6 shadow-md">
-      <img
+      <Image
         src={image[0]}
         alt={`${title} cover`}
         className="w-full sm:w-32 rounded-lg sm:mr-4  mb-4 sm:mb-0"

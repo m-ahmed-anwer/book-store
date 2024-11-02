@@ -12,7 +12,7 @@ export default function Home() {
             Welcome to Book Store
           </h1>
           <p className="text-xl font-light mb-8">
-            "Discover your next great read at unbeatable prices."
+            Discover your next great read at unbeatable prices.
           </p>
           <Link
             href={"/products"}

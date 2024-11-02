@@ -2,6 +2,7 @@ import React from "react";
 import books from "@/data/books";
 import Link from "next/link";
 import AddToCartButton from "@/components/add-to-cart";
+import Image from "next/image";
 
 const ProductPage = async ({ params }) => {
   const { productId } = await params;
@@ -13,7 +14,7 @@ const ProductPage = async ({ params }) => {
       <div className="min-h-screen flex flex-col items-center justify-center p-8 bg-base-200 text-center">
         <h1 className="text-4xl font-bold mb-4">Product Not Found</h1>
         <p className="text-lg text-gray-600 mb-6">
-          We're sorry, but the product you're looking for does not exist.
+          {`We're sorry, but the product you're looking for does not exist.`}
         </p>
         <Link href={"/products"} className="btn btn-primary">
           Go Back to Products
@@ -35,7 +36,7 @@ const ProductPage = async ({ params }) => {
                 key={index}
                 className="carousel-item relative w-full"
               >
-                <img
+                <Image
                   src={image}
                   alt={`image${index + 1}`}
                   className="w-full rounded-lg shadow-md"
