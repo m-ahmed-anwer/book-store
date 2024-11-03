@@ -47,5 +47,4 @@ jobs:
             --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/shopping:latest \
             --platform managed \
             --region us-central1 \
-            --allow-unauthenticated \
-            --port 8004
+            --allow-unauthenticated
