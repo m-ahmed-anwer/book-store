@@ -3,7 +3,7 @@ import product from "../model/product.js";
 
 const router = express.Router();
 
-router.get("/api/products", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const products = await product.Product.find({});
 

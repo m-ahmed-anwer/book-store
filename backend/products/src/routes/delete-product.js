@@ -4,7 +4,7 @@ import product from "../model/product.js";
 
 const router = express.Router();
 
-router.delete("/api/product/:productId", async (req, res, next) => {
+router.delete("/:productId", async (req, res, next) => {
   const { productId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(productId)) {

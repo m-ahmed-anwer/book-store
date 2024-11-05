@@ -31,7 +31,7 @@ const publishMessage = async (topicName, payload) => {
   }
 };
 
-router.post("/api/order", UserAuth, async (req, res, next) => {
+router.post("/order", UserAuth, async (req, res, next) => {
   const customerId = req.user.id;
 
   try {

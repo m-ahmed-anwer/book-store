@@ -4,7 +4,7 @@ import { AddToCart } from "../service/add-to-cart.js";
 
 const router = express.Router();
 
-router.put("/api/cart", UserAuth, async (req, res, next) => {
+router.put("/", UserAuth, async (req, res, next) => {
   const _id = req.user.id;
   const { item, qty, isRemove } = req.body;
 

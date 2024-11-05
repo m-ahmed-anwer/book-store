@@ -4,7 +4,7 @@ import order from "../model/order.js";
 
 const router = express.Router();
 
-router.get("/api/order", UserAuth, async (req, res, next) => {
+router.get("/order", UserAuth, async (req, res, next) => {
   const customerId = req.user.id;
 
   try {

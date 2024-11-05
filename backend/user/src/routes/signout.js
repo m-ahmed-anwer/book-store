@@ -2,7 +2,7 @@ import express from "express";
 
 const router = express.Router();
 
-router.post("/api/users/signout", (req, res) => {
+router.post("signout", (req, res) => {
   try {
     if (!req.cookies || !req.cookies.session) {
       return res.status(401).json({ message: "User not signed in" });

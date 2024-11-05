@@ -8,7 +8,7 @@ import User from "../model/user.js";
 const router = express.Router();
 
 router.post(
-  "/api/users/login",
+  "/login",
   [
     body("email").isEmail().withMessage("Email must be valid"),
     body("password")

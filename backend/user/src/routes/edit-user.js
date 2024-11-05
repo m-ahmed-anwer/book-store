@@ -6,7 +6,7 @@ import User from "../model/user.js";
 const router = express.Router();
 
 router.post(
-  "/api/users/editUser/:id",
+  "/editUser/:id",
   [
     body("name").trim().notEmpty().withMessage("You must supply a name"),
     body("image").trim().notEmpty().withMessage("You must supply an image"),

@@ -16,7 +16,7 @@ const upload = multer({
   storage: multer.memoryStorage(),
 });
 
-router.put("/api/product/create", upload.single("image"), async (req, res) => {
+router.put("/create", upload.single("image"), async (req, res) => {
   const { title, author, description, price } = req.body;
 
   try {

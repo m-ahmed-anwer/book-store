@@ -5,7 +5,7 @@ import User from "../model/user.js";
 const router = express.Router();
 
 router.post(
-  "/api/users/signup",
+  "/signup",
   [
     body("email").isEmail().withMessage("Email must be valid"),
     body("password")
@@ -48,7 +48,6 @@ router.post(
       res.status(201).send(user);
     } catch (error) {
       res.status(500).json({ message: "Internal server error" });
-    
     }
   }
 );

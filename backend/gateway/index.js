@@ -11,9 +11,9 @@ app.get("/health", (req, res) => {
   res.status(200).send({ message: "Gateway is healthy" });
 });
 
-app.use("/users", proxy("http://localhost:8001"));
-app.use("/shopping", proxy("http://localhost:8004"));
-app.use("/", proxy("http://localhost:8002"));
+app.use("/api/users", proxy("http://localhost:8001"));
+app.use("/api/shopping", proxy("http://localhost:8004"));
+app.use("/api/products", proxy("http://localhost:8002"));
 
 app.all("*", async (req, res) => {
   res.status(404).send({ message: "Page not found" });
