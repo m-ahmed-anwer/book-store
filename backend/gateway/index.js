@@ -7,6 +7,10 @@ app.use(cors());
 app.use(express.json());
 app.set("trust proxy", true);
 
+app.get("/health", (req, res) => {
+  res.status(200).send({ message: "Gateway is healthy" });
+});
+
 app.use("/users", proxy("http://localhost:8001"));
 app.use("/shopping", proxy("http://localhost:8004"));
 app.use("/", proxy("http://localhost:8002"));
