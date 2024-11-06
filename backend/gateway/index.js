@@ -12,7 +12,7 @@ app.get("/health", (req, res) => {
 });
 
 app.use("/api/users", proxy("http://localhost:8001"));
-app.use("/api/shopping", proxy("http://localhost:8010"));
+app.use("/api/shopping", proxy("http://localhost:8003"));
 app.use("/api/products", proxy("http://localhost:8002"));
 
 app.all("*", async (req, res) => {
