@@ -4,7 +4,7 @@ import cart from "../model/cart.js";
 
 const router = express.Router();
 
-router.get("/", UserAuth, async (req, res, next) => {
+router.get("/get", UserAuth, async (req, res, next) => {
   const customerId = req.user.id;
 
   try {
