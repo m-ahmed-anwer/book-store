@@ -27,7 +27,25 @@ const SignupForm = ({ onSubmit, initialFormData }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      onSubmit(formData);
+      try {
+        const response = await fetch(`http://localhost:3000/api/signup`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          toast.success("Signup successful");
+        } else {
+          toast.error(result.message);
+        }
+      } catch (error) {
+        toast.error("Signup failed. Please try again.");
+      }
     } else {
       toast.error("Please correct the errors in the form");
     }

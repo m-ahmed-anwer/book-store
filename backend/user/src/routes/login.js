@@ -33,7 +33,7 @@ router.post(
       const existingUser = await User.User.findOne({ email });
       if (!existingUser) {
         return res.status(401).json({
-          errors: [{ message: "Invalid email or password" }],
+          error: "Invalid email or password",
         });
       }
 
@@ -43,7 +43,7 @@ router.post(
       );
       if (!passwordsMatch) {
         return res.status(401).json({
-          errors: { message: "Invalid email or password" },
+          error: "Invalid password",
         });
       }
 

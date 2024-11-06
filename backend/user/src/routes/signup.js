@@ -44,6 +44,11 @@ router.post(
 
       await user.save();
 
+      res.status(200).json({
+        message: "Signup successful",
+        user,
+      });
+
       res.status(201).send(user);
     } catch (error) {
       // console.error(error);

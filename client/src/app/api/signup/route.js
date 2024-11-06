@@ -25,7 +25,7 @@ export async function POST(request) {
       });
     } else {
       return NextResponse.json(
-        { success: false, message: result.message || "Signup failed" },
+        { success: false, message: result.error || "Signup failed" },
         { status: response.status }
       );
     }
