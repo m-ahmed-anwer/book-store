@@ -32,7 +32,7 @@ router.post(
 
       if (existingUser) {
         return res.status(400).json({
-          errors: [{ message: "Email in use" }],
+          error: "Email in use",
         });
       }
 
@@ -40,14 +40,14 @@ router.post(
         name,
         email,
         password,
-        image,
       });
 
       await user.save();
 
       res.status(201).send(user);
     } catch (error) {
-      res.status(500).json({ message: "Internal server error" });
+      // console.error(error);
+      res.status(500).json({ error: "Internal server error" });
     }
   }
 );

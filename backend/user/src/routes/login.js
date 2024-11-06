@@ -43,7 +43,7 @@ router.post(
       );
       if (!passwordsMatch) {
         return res.status(401).json({
-          errors: [{ message: "Invalid email or password" }],
+          errors: { message: "Invalid email or password" },
         });
       }
 

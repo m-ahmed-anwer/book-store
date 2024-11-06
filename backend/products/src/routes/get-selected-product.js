@@ -4,7 +4,7 @@ import product from "../model/product.js";
 
 const router = express.Router();
 
-router.get("/:productId", async (req, res, next) => {
+router.get("/get/:productId", async (req, res, next) => {
   const { productId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(productId)) {

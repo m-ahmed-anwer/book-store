@@ -1,51 +1,31 @@
-import { isValidEmail, isValidPassword } from "../helpers/validation";
-import { cookies } from "next/headers";
+// export async function login({ email, password }) {
+//   try {
+//     const response = await fetch("/api/login", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({ email, password }),
+//     });
 
-export async function login({ email, password }) {
-  const cookie = await cookies();
-  if (!isValidEmail(email)) {
-    return { success: false, message: "Invalid email address" };
-  }
-  if (!isValidPassword(password)) {
-    return {
-      success: false,
-      message: "Password must be at least 6 characters long",
-    };
-  }
+//     const data = await response.json();
 
-  // dispatch(setCurrentUser({ id: 1, name: "Ahmed", email: email }));
-
-  cookie.set("authorization", response.data);
-
-  return { success: true, data: { id: 1, name: "Ahmed", email: email } };
-  // try {
-  //   // Make a POST request to the backend API for login
-  //   const response = await axios.post("/asdad", {
-  //     email,
-  //     password,
-  //   });
-
-  //   // Handle successful response
-  //   if (response.status === 200) {
-  //     console.log("Login successful", response.data);
-  //     return { success: true, data: response.data };
-  //   } else {
-  //     return {
-  //       success: false,
-  //       message: response.data.message || "Login failed. Try again.",
-  //     };
-  //   }
-  // } catch (error) {
-  //   // Handle network or server errors
-  //   if (error.response && error.response.data) {
-  //     // Server provided an error response
-  //     return {
-  //       success: false,
-  //       message: error.response.data.message || "Server error occurred.",
-  //     };
-  //   } else {
-  //     // Something went wrong in the request (e.g., network error)
-  //     return { success: false, message: "An error occurred during login." };
-  //   }
-  // }
-}
+//     if (response.ok) {
+//       return {
+//         success: true,
+//         data: data, // You can return any data from the API here
+//       };
+//     } else {
+//       return {
+//         success: false,
+//         message: data.message || "Login failed",
+//       };
+//     }
+//   } catch (error) {
+//     console.error("Error during login", error);
+//     return {
+//       success: false,
+//       message: "An unexpected error occurred during login.",
+//     };
+//   }
+// }

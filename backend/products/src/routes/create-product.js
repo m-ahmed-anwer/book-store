@@ -1,19 +1,21 @@
-import AWS from "aws-sdk";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import multer from "multer";
 import express from "express";
 import product from "../model/product.js";
 
 const router = express.Router();
 
-AWS.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+const s3Client = new S3Client({
   region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  },
 });
 
-const s3 = new AWS.S3();
 const upload = multer({
   storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 },
 });
 
 router.put("/create", upload.single("image"), async (req, res) => {
@@ -35,21 +37,19 @@ router.put("/create", upload.single("image"), async (req, res) => {
         ContentType: req.file.mimetype,
       };
 
-      try {
-        const s3Upload = await s3.upload(params).promise();
-        newProduct.image = s3Upload.Location;
-        await newProduct.save();
-      } catch (s3Error) {
-        return res
-          .status(500)
-          .send({ message: "Failed to upload image", s3Error });
-      }
+      const command = new PutObjectCommand(params);
+      await s3Client.send(command);
+
+      newProduct.image = `https://${params.Bucket}.s3.${process.env.AWS_REGION}.amazonaws.com/${params.Key}`;
+      await newProduct.save();
     }
 
-    res
-      .status(201)
-      .send({ product: newProduct, message: "Product created successfully" });
+    res.status(201).send({
+      product: newProduct,
+      message: "Product created successfully",
+    });
   } catch (error) {
+    console.error("Error in product creation:", error);
     res.status(500).send({ message: "Product creation failed", error });
   }
 });

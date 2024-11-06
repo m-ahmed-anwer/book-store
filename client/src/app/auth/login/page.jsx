@@ -1,5 +1,5 @@
 import LoginForm from "@/components/login-form";
-import { login } from "@/lib/auth/auth";
+
 
 const formData = {
   email: "",
@@ -10,11 +10,20 @@ const Login = async () => {
   const handleLogin = async (formData) => {
     "use server";
     try {
-      const response = await login(formData);
-      if (response.success) {
-        console.error("Login successful", response.data);
+      const response = await fetch(`http://localhost:3000/api/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        console.log("Login successful", result.data);
       } else {
-        console.error(response.message);
+        console.error(result.message);
       }
     } catch (error) {
       console.error("Login failed", error.message);
