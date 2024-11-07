@@ -34,11 +34,9 @@ const LoginForm = ({ onSubmit }) => {
     });
 
     const result = await response.json();
-    if (!result.success) {
-      // toast.error(result.message);
+    if (!response.ok || !result.success) {
       throw new Error(result.message || "Login failed");
     }
-    console.log("Login successful", result.data);
     return result;
   };
 
@@ -53,7 +51,9 @@ const LoginForm = ({ onSubmit }) => {
     toast.promise(login(formData), {
       loading: "Logging in...",
       success: <b>Login successful!</b>,
-      error: <b>Could not log in. Please try again.</b>,
+      error: (err) => (
+        <b>{err.message || "Could not log in. Please try again."}</b>
+      ),
     });
   };
 

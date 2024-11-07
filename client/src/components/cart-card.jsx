@@ -15,7 +15,9 @@ const CartCard = ({ cartItem, dispatch }) => {
   return (
     <div className="mb-6 flex flex-col sm:flex-row justify-between rounded-lg bg-base-100 p-6 shadow-md">
       <Image
-        src={image[0]}
+        width={150}
+        height={200}
+        src={image}
         alt={`${title} cover`}
         className="w-full sm:w-32 rounded-lg sm:mr-4  mb-4 sm:mb-0"
       />

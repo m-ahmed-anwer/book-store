@@ -5,9 +5,8 @@ const books = [
     author: "F. Scott Fitzgerald",
     price: 9.99,
     description: "A tragic love story set in the Roaring Twenties.",
-    image: [
+    image:
       "https://media.istockphoto.com/id/173015527/photo/a-single-red-book-on-a-white-surface.jpg?s=612x612&w=0&k=20&c=AeKmdZvg2_bRY2Yct7odWhZXav8CgDtLMc_5_pjSItY=",
-    ],
   },
   {
     id: 2,
@@ -15,9 +14,8 @@ const books = [
     author: "George Orwell",
     price: 8.99,
     description: "A dystopian novel about totalitarianism.",
-    image: [
+    image:
       "https://media.istockphoto.com/id/173015527/photo/a-single-red-book-on-a-white-surface.jpg?s=612x612&w=0&k=20&c=AeKmdZvg2_bRY2Yct7odWhZXav8CgDtLMc_5_pjSItY=",
-    ],
   },
   {
     id: 3,
@@ -25,9 +23,8 @@ const books = [
     author: "Harper Lee",
     price: 7.99,
     description: "A novel about racial injustice in the Deep South.",
-    image: [
+    image:
       "https://media.istockphoto.com/id/173015527/photo/a-single-red-book-on-a-white-surface.jpg?s=612x612&w=0&k=20&c=AeKmdZvg2_bRY2Yct7odWhZXav8CgDtLMc_5_pjSItY=",
-    ],
   },
   {
     id: 4,
@@ -35,9 +32,8 @@ const books = [
     author: "Jane Austen",
     price: 6.99,
     description: "A romantic novel that critiques the British landed gentry.",
-    image: [
+    image:
       "https://media.istockphoto.com/id/173015527/photo/a-single-red-book-on-a-white-surface.jpg?s=612x612&w=0&k=20&c=AeKmdZvg2_bRY2Yct7odWhZXav8CgDtLMc_5_pjSItY=",
-    ],
   },
   {
     id: 5,
@@ -46,9 +42,8 @@ const books = [
     price: 11.99,
     description:
       "The narrative of Captain Ahab's obsession with a giant white whale.",
-    image: [
+    image:
       "https://media.istockphoto.com/id/173015527/photo/a-single-red-book-on-a-white-surface.jpg?s=612x612&w=0&k=20&c=AeKmdZvg2_bRY2Yct7odWhZXav8CgDtLMc_5_pjSItY=",
-    ],
   },
   {
     id: 6,
@@ -56,9 +51,8 @@ const books = [
     author: "J.D. Salinger",
     price: 10.99,
     description: "A story about teenage rebellion and alienation.",
-    image: [
+    image:
       "https://media.istockphoto.com/id/173015527/photo/a-single-red-book-on-a-white-surface.jpg?s=612x612&w=0&k=20&c=AeKmdZvg2_bRY2Yct7odWhZXav8CgDtLMc_5_pjSItY=",
-    ],
   },
   {
     id: 7,
@@ -67,9 +61,8 @@ const books = [
     price: 12.99,
     description:
       "A dystopian novel exploring the dangers of technological advancement.",
-    image: [
+    image:
       "https://media.istockphoto.com/id/173015527/photo/a-single-red-book-on-a-white-surface.jpg?s=612x612&w=0&k=20&c=AeKmdZvg2_bRY2Yct7odWhZXav8CgDtLMc_5_pjSItY=",
-    ],
   },
   {
     id: 8,
@@ -77,9 +70,8 @@ const books = [
     author: "J.R.R. Tolkien",
     price: 9.99,
     description: "A fantasy novel about the adventures of Bilbo Baggins.",
-    image: [
+    image:
       "https://media.istockphoto.com/id/173015527/photo/a-single-red-book-on-a-white-surface.jpg?s=612x612&w=0&k=20&c=AeKmdZvg2_bRY2Yct7odWhZXav8CgDtLMc_5_pjSItY=",
-    ],
   },
   {
     id: 9,
@@ -87,9 +79,8 @@ const books = [
     author: "Ray Bradbury",
     price: 8.99,
     description: "A dystopian novel about a future where books are banned.",
-    image: [
+    image:
       "https://media.istockphoto.com/id/173015527/photo/a-single-red-book-on-a-white-surface.jpg?s=612x612&w=0&k=20&c=AeKmdZvg2_bRY2Yct7odWhZXav8CgDtLMc_5_pjSItY=",
-    ],
   },
   {
     id: 10,
@@ -97,9 +88,8 @@ const books = [
     author: "Oscar Wilde",
     price: 10.99,
     description: "A novel about vanity, moral duplicity, and aestheticism.",
-    image: [
+    image:
       "https://media.istockphoto.com/id/173015527/photo/a-single-red-book-on-a-white-surface.jpg?s=612x612&w=0&k=20&c=AeKmdZvg2_bRY2Yct7odWhZXav8CgDtLMc_5_pjSItY=",
-    ],
   },
   {
     id: 11,
@@ -107,9 +97,8 @@ const books = [
     author: "Fyodor Dostoevsky",
     price: 13.99,
     description: "A psychological thriller exploring morality and redemption.",
-    image: [
+    image:
       "https://media.istockphoto.com/id/173015527/photo/a-single-red-book-on-a-white-surface.jpg?s=612x612&w=0&k=20&c=AeKmdZvg2_bRY2Yct7odWhZXav8CgDtLMc_5_pjSItY=",
-    ],
   },
   {
     id: 12,
@@ -118,9 +107,8 @@ const books = [
     price: 14.99,
     description:
       "An epic poem about Odysseus' journey home after the Trojan War.",
-    image: [
+    image:
       "https://media.istockphoto.com/id/173015527/photo/a-single-red-book-on-a-white-surface.jpg?s=612x612&w=0&k=20&c=AeKmdZvg2_bRY2Yct7odWhZXav8CgDtLMc_5_pjSItY=",
-    ],
   },
   {
     id: 13,
@@ -128,9 +116,8 @@ const books = [
     author: "Emily Brontë",
     price: 11.99,
     description: "A tale of passion and revenge on the Yorkshire moors.",
-    image: [
+    image:
       "https://media.istockphoto.com/id/173015527/photo/a-single-red-book-on-a-white-surface.jpg?s=612x612&w=0&k=20&c=AeKmdZvg2_bRY2Yct7odWhZXav8CgDtLMc_5_pjSItY=",
-    ],
   },
   {
     id: 14,
@@ -138,9 +125,8 @@ const books = [
     author: "C.S. Lewis",
     price: 9.99,
     description: "A fantasy series about children who discover a magical land.",
-    image: [
+    image:
       "https://media.istockphoto.com/id/173015527/photo/a-single-red-book-on-a-white-surface.jpg?s=612x612&w=0&k=20&c=AeKmdZvg2_bRY2Yct7odWhZXav8CgDtLMc_5_pjSItY=",
-    ],
   },
   {
     id: 15,
@@ -149,9 +135,8 @@ const books = [
     price: 8.99,
     description:
       "A novel about a shepherd's journey to find his personal legend.",
-    image: [
+    image:
       "https://media.istockphoto.com/id/173015527/photo/a-single-red-book-on-a-white-surface.jpg?s=612x612&w=0&k=20&c=AeKmdZvg2_bRY2Yct7odWhZXav8CgDtLMc_5_pjSItY=",
-    ],
   },
 ];
 

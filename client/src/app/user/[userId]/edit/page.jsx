@@ -1,7 +1,7 @@
 "use client"; // This must be at the top of the file
 
 import Image from "next/image";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -82,6 +82,8 @@ const EditUser = () => {
           {profileImage && (
             <div className="mb-4">
               <Image
+                width={150}
+                height={200}
                 src={profileImage}
                 alt="Profile Preview"
                 className="w-32 h-32 object-cover rounded"

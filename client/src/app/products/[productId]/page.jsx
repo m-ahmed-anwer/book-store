@@ -23,31 +23,19 @@ const ProductPage = async ({ params }) => {
     );
   }
 
-  const { title, author, price, description, image: images } = product;
+  const { title, author, price, description, image } = product;
 
   return (
     <div className="min-h-screen flex items-center justify-center p-8 bg-base-200">
       <div className="flex flex-col md:flex-row items-center md:items-start max-w-4xl w-full space-y-8 md:space-y-0 md:space-x-8">
         <div className="md:w-1/2 p-4">
-          <div className="carousel w-full">
-            {images.map((image, index) => (
-              <div
-                id={`slide${index + 1}`}
-                key={index}
-                className="carousel-item relative w-full"
-              >
-                <Image
-                  src={image}
-                  alt={`image${index + 1}`}
-                  className="w-full rounded-lg shadow-md"
-                />
-                <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-                  <button className="btn btn-circle">❮</button>
-                  <button className="btn btn-circle">❯</button>
-                </div>
-              </div>
-            ))}
-          </div>
+          <Image
+            src={image}
+            width={500}
+            height={500}
+            alt={`image`}
+            className="w-full rounded-lg shadow-md"
+          />
         </div>
         <div className="md:w-1/2 p-4 space-y-4">
           <h1 className="text-2xl font-bold">{title}</h1>

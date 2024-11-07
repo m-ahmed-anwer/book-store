@@ -10,7 +10,7 @@ const BookCard = ({ id, title, author, price, image }) => {
           <Image
             src={image}
             alt={title}
-            width={150}
+            width={200}
             height={200}
             className="rounded-md object-cover transition-transform duration-300 transform group-hover:scale-105"
           />

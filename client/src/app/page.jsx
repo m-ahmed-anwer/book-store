@@ -33,7 +33,7 @@ export default function Home() {
               title={book.title}
               author={book.author}
               price={book.price}
-              image={book.image[0]}
+              image={book.image}
             />
           ))}
         </div>

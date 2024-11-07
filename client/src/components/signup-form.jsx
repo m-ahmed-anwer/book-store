@@ -24,31 +24,37 @@ const SignupForm = ({ onSubmit, initialFormData }) => {
     return Object.keys(validationErrors).length === 0;
   };
 
+  const signup = async (credentials) => {
+    const response = await fetch(`http://localhost:3000/api/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(credentials),
+    });
+
+    const result = await response.json();
+    if (!result.success) {
+      throw new Error(result.message || "Signup failed");
+    }
+    return result;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      try {
-        const response = await fetch(`http://localhost:3000/api/signup`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
 
-        const result = await response.json();
-
-        if (result.success) {
-          toast.success("Signup successful");
-        } else {
-          toast.error(result.message);
-        }
-      } catch (error) {
-        toast.error("Signup failed. Please try again.");
-      }
-    } else {
+    if (!validateForm()) {
       toast.error("Please correct the errors in the form");
+      return;
     }
+
+    toast.promise(signup(formData), {
+      loading: "Signing up...",
+      success: <b>Signup successful!</b>,
+      error: (err) => (
+        <b>{err.message || "Signup failed. Please try again."}</b>
+      ),
+    });
   };
 
   return (

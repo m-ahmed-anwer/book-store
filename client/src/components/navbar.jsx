@@ -61,6 +61,8 @@ const Navbar = async () => {
               >
                 <div className="w-10 rounded-full">
                   <Image
+                    width={150}
+                    height={150}
                     alt="Profile"
                     src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
                   />
