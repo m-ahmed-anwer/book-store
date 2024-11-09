@@ -11,17 +11,13 @@ router.get("/get/:productId", async (req, res, next) => {
     return res.status(400).send({ message: "Invalid product ID format" });
   }
 
-  try {
-    const productResult = await product.Product.findById(productId);
+  const productResult = await product.Product.findById(productId);
 
-    if (!productResult) {
-      return res.status(404).send({ message: "Product not found" });
-    }
-
-    res.status(200).send(productResult);
-  } catch (error) {
-    res.status(500).send({ message: "Server error while fetching product" });
+  if (!productResult) {
+    return res.status(404).send({ message: "Product not found" });
   }
+
+  res.status(200).send(productResult);
 });
 
 export { router as getSelectedProductRouter };

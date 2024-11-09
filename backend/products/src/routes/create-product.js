@@ -21,37 +21,32 @@ const upload = multer({
 router.put("/create", upload.single("image"), async (req, res) => {
   const { title, author, description, price } = req.body;
 
-  try {
-    const newProduct = await product.Product.create({
-      title,
-      author,
-      description,
-      price,
-    });
+  const newProduct = await product.Product.create({
+    title,
+    author,
+    description,
+    price,
+  });
 
-    if (req.file) {
-      const params = {
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Key: `products/${newProduct._id}/${req.file.originalname}`,
-        Body: req.file.buffer,
-        ContentType: req.file.mimetype,
-      };
+  if (req.file) {
+    const params = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: `products/${newProduct._id}/${req.file.originalname}`,
+      Body: req.file.buffer,
+      ContentType: req.file.mimetype,
+    };
 
-      const command = new PutObjectCommand(params);
-      await s3Client.send(command);
+    const command = new PutObjectCommand(params);
+    await s3Client.send(command);
 
-      newProduct.image = `https://${params.Bucket}.s3.${process.env.AWS_REGION}.amazonaws.com/${params.Key}`;
-      await newProduct.save();
-    }
-
-    res.status(201).send({
-      product: newProduct,
-      message: "Product created successfully",
-    });
-  } catch (error) {
-    console.error("Error in product creation:", error);
-    res.status(500).send({ message: "Product creation failed", error });
+    newProduct.image = `https://${params.Bucket}.s3.${process.env.AWS_REGION}.amazonaws.com/${params.Key}`;
+    await newProduct.save();
   }
+
+  res.status(201).send({
+    product: newProduct,
+    message: "Product created successfully",
+  });
 });
 
 export { router as createProductRouter };

@@ -11,17 +11,13 @@ router.delete("/:productId", async (req, res, next) => {
     return res.status(400).send({ message: "Invalid product ID format" });
   }
 
-  try {
-    const productResult = await product.Product.findByIdAndDelete(productId);
+  const productResult = await product.Product.findByIdAndDelete(productId);
 
-    if (!productResult) {
-      return res.status(404).send({ message: "Product not found" });
-    }
-
-    res.status(200).send({ message: "Product deleted successfully" });
-  } catch (error) {
-    res.status(500).send({ message: "Server error while deleting product" });
+  if (!productResult) {
+    return res.status(404).send({ message: "Product not found" });
   }
+
+  res.status(200).send({ message: "Product deleted successfully" });
 });
 
 export { router as deleteProductRouter };
