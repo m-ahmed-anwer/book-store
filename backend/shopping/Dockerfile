@@ -10,7 +10,7 @@ COPY . .
 
 WORKDIR /app/src
 
-EXPOSE 8010
+EXPOSE 8003
 
 CMD ["npm", "start"]
 

@@ -4,9 +4,9 @@ import cookieSession from "cookie-session";
 import cookieParser from "cookie-parser";
 import { errorHandler } from "./middleware/error-handler.js";
 import { addToCartRouter } from "./routes/add-to-cart.js";
-import { removeFromCartRouter } from "./routes/delete-cart.js";
+import { removeFromCartRouter } from "./routes/delete-item-cart.js";
 import { getCartRouter } from "./routes/get-cart.js";
-import { getOrderRouter } from "./routes/get-orders.js";
+import { getOrderRouter } from "./routes/get-order-by-user.js";
 import { placeOrderRouter } from "./routes/place-order.js";
 
 const app = express();
@@ -33,6 +33,7 @@ app.use(removeFromCartRouter);
 app.use(getCartRouter);
 app.use(getOrderRouter);
 app.use(placeOrderRouter);
+
 app.all("*", async (req, res) => {
   res.status(404).send({ message: "Page not found" });
 });

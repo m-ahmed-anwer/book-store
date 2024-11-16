@@ -4,7 +4,7 @@ import product from "../model/product.js";
 
 const router = express.Router();
 
-router.delete("/:productId", async (req, res, next) => {
+router.delete("/delete/:productId", async (req, res, next) => {
   const { productId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(productId)) {
@@ -17,7 +17,9 @@ router.delete("/:productId", async (req, res, next) => {
     return res.status(404).send({ message: "Product not found" });
   }
 
-  res.status(200).send({ message: "Product deleted successfully" });
+  res
+    .status(200)
+    .send({ message: "Product deleted successfully", success: true });
 });
 
 export { router as deleteProductRouter };

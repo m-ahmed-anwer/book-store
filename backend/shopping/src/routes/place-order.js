@@ -5,8 +5,10 @@ import { CreateNewOrder } from "../service/create-new-order.js";
 
 const router = Router();
 
-router.post("/order", UserAuth, async (req, res, next) => {
+router.post("/place-order", UserAuth, async (req, res, next) => {
   const customerId = req.user?.id;
+
+  console.log(customerId);
 
   if (!customerId) {
     return res.status(400).send({ message: "Invalid customer ID" });

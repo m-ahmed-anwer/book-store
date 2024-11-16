@@ -4,7 +4,7 @@ import { RemoveFromCart } from "../service/remove-item-cart.js";
 
 const router = express.Router();
 
-router.delete("/:itemId", UserAuth, async (req, res, next) => {
+router.delete("/delete/:itemId", UserAuth, async (req, res, next) => {
   const customerId = req.user.id;
   const { itemId } = req.params;
 

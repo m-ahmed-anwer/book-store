@@ -9,8 +9,8 @@ const start = async () => {
   } catch (error) {
     console.error(error);
   }
-  app.listen(8010, () => {
-    console.log("Listening on port 8010!");
+  app.listen(8003, () => {
+    console.log("Listening on port 8003!");
   });
 };
 
