@@ -41,7 +41,6 @@ export const decrementItem = createAsyncThunk(
   }
 );
 
-// Initial state for the cart
 const initialState = {
   cartItems: {},
   total: 0,
@@ -50,16 +49,6 @@ const initialState = {
   error: null,
 };
 
-const updateQuantities = (cartItems) => {
-  const totalItems = cartItems.reduce((total, res) => total + res.quantity, 0);
-  const totalPrice = cartItems.reduce(
-    (total, res) => total + res.price * res.quantity,
-    0
-  );
-  return { totalItems, totalPrice };
-};
-
-// Create a Redux slice for the cart
 const cartSlice = createSlice({
   name: "cart",
   initialState,

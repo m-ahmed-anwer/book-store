@@ -1,10 +1,11 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { selectCartTotalItems } from "@/store/cartSlice";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 const CartBadge = () => {
+  const totalItems = useSelector(selectCartTotalItems);
   const [isClient, setIsClient] = useState(false);
-  const totalItems = useSelector((state) => state.cart.totalItems);
 
   useEffect(() => {
     setIsClient(true);
@@ -14,9 +15,9 @@ const CartBadge = () => {
 
   return (
     <>
-      {totalItems ? (
+      {totalItems > 0 && (
         <span className="badge badge-sm indicator-item">{totalItems}</span>
-      ) : null}
+      )}
     </>
   );
 };
