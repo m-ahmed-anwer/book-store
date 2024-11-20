@@ -1,37 +1,67 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createEntityAdapter,
+  createSlice,
+} from "@reduxjs/toolkit";
+import axios from "axios";
 
-const initialState = {
-  id: null,
-  name: "",
-  email: "",
-  image: "",
-};
+const userAdapter = createEntityAdapter({
+  selectId: (currentUser) => currentUser.id,
+});
+
+export const loginCredentials = createAsyncThunk(
+  "user/loginCredentials",
+  async ({ email, password }) => {
+    const response = await axios.post("http://localhost:8000/api/users/login", {
+      email,
+      password,
+    });
+    return response.data;
+  }
+);
+
+const initialState = userAdapter.getInitialState({
+  message: null,
+  error: false,
+  currentUser: null,
+});
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setCurrentUser(state, action) {
-      const { id, name, email, image } = action.payload;
-      state.id = id;
-      state.name = name;
-      state.email = email;
-      state.image = image;
+    signout: (state) => {
+      state.currentUser = null;
     },
-    logout(state) {
-      state.id = null;
-      state.name = "";
-      state.email = "";
-      state.image = "";
-    },
-    updateProfile(state, action) {
-      const { name, image } = action.payload;
-      if (name) state.name = name;
-      if (image) state.image = image;
-    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(loginCredentials.pending, (state) => {
+        state.error = false;
+      })
+      .addCase(loginCredentials.fulfilled, (state, action) => {
+        state.error = false;
+        if (action.payload.success) {
+          userAdapter.upsertOne(state, action.payload.user);
+          state.currentUser = action.payload.user;
+        } else {
+          state.error = true;
+          state.message = action.payload.message;
+        }
+      })
+      .addCase(loginCredentials.rejected, (state) => {
+        state.error = true;
+        state.message = "Something went wrong";
+      });
   },
 });
 
-export const { setCurrentUser, logout, updateProfile } = userSlice.actions;
+export const getUserError = (state) => state.user.error;
+export const getUserMessage = (state) => state.user.message;
+export const getCurrentUser = (state) => state.user.currentUser;
+export const getUserId = (state) =>
+  state.user.currentUser ? state.user.currentUser.id : null;
+
+export const { signout } = userSlice.actions;
 
 export default userSlice.reducer;

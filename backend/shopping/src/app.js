@@ -8,6 +8,7 @@ import { removeFromCartRouter } from "./routes/delete-item-cart.js";
 import { getCartRouter } from "./routes/get-cart.js";
 import { getOrderRouter } from "./routes/get-order-by-user.js";
 import { placeOrderRouter } from "./routes/place-order.js";
+import { decreaseItemRouter } from "./routes/decrease-item.js";
 
 const app = express();
 app.set("trust proxy", true);
@@ -33,6 +34,7 @@ app.use(removeFromCartRouter);
 app.use(getCartRouter);
 app.use(getOrderRouter);
 app.use(placeOrderRouter);
+app.use(decreaseItemRouter);
 
 app.all("*", async (req, res) => {
   res.status(404).send({ message: "Page not found" });

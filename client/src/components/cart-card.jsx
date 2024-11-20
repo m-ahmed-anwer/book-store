@@ -1,6 +1,6 @@
 import {
+  addItemToCart,
   decrementItem,
-  incrementItem,
   removeItemFromCart,
 } from "@/store/cartSlice";
 import Image from "next/image";
@@ -8,9 +8,20 @@ import React from "react";
 import { GoTrash } from "react-icons/go";
 
 const CartCard = ({ cartItem, dispatch }) => {
-  const { id, title, author, price, quantity, image } = cartItem;
-
+  const product = cartItem.product;
+  const { title, author, price, image } = product;
+  const quantity = cartItem.unit;
   const finalPrice = parseFloat(price) * quantity;
+  const userId = "672aed44b56ac350a1b8829d";
+
+  const data = {
+    _id: product._id,
+    title: product.title,
+    author: product.author,
+    description: product.description,
+    image: product.image,
+    price: product.price,
+  };
 
   return (
     <div className="mb-6 flex flex-col sm:flex-row justify-between rounded-lg bg-base-100 p-6 shadow-md">
@@ -33,7 +44,9 @@ const CartCard = ({ cartItem, dispatch }) => {
           <div className="flex items-center border-gray-100">
             <span
               className="cursor-pointer rounded-l bg-base-300 px-3.5 py-1 duration-100 hover:bg-blue-500 hover:text-blue-50"
-              onClick={() => dispatch(decrementItem(cartItem))}
+              onClick={() => {
+                dispatch(decrementItem({ userId, productId: cartItem._id }));
+              }}
             >
               -
             </span>
@@ -46,14 +59,16 @@ const CartCard = ({ cartItem, dispatch }) => {
             />
             <span
               className="cursor-pointer rounded-r bg-base-300 px-3 py-1 duration-100 hover:bg-blue-500 hover:text-blue-50"
-              onClick={() => dispatch(incrementItem(cartItem))}
+              onClick={() => {
+                dispatch(addItemToCart({ userId, item: data }));
+              }}
             >
               +
             </span>
           </div>
           <div className="mt-4 flex items-center space-x-4">
             <span className="text-sm  ">
-              {price} x {quantity}
+              ${price} x {quantity}
             </span>
 
             <p className="text-lg font-bold text-indigo-600">
@@ -62,7 +77,9 @@ const CartCard = ({ cartItem, dispatch }) => {
 
             <GoTrash
               className="h-5 w-5 cursor-pointer duration-150 hover:text-red-500"
-              onClick={() => dispatch(removeItemFromCart(cartItem))}
+              onClick={() => {
+                dispatch(removeItemFromCart({ userId, id: cartItem._id }));
+              }}
             />
           </div>
         </div>

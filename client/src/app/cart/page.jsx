@@ -8,6 +8,7 @@ import Link from "next/link";
 
 const Cart = () => {
   const dispatch = useDispatch();
+  
   const cartItems = useSelector((state) => state.cart.cartItems);
 
   return (
@@ -26,9 +27,9 @@ const Cart = () => {
         </div>
       ) : (
         <>
-          {cartItems.map((cartItem) => (
+          {cartItems.items.map((cartItem) => (
             <CartCard
-              key={cartItem.id}
+              key={cartItem._id}
               cartItem={cartItem}
               dispatch={dispatch}
             />

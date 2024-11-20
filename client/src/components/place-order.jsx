@@ -32,7 +32,7 @@ const PlaceOrder = () => {
           Subtotal
         </h5>
         <h6 className="font-manrope font-bold text-3xl leading-10 text-indigo-600 text-center md:text-right">
-          ${total}
+          ${total.toFixed(2)}
         </h6>
       </div>
       <div className="w-full max-w-lg mx-auto">

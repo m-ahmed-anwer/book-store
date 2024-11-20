@@ -1,11 +1,20 @@
 "use client";
+import {
+  getUserError,
+  getUserMessage,
+  loginCredentials,
+} from "@/store/userSlice";
 import Link from "next/link";
 import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 
 const LoginForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
+  const dispatch = useDispatch();
+  const error = useSelector(getUserError);
+  const message = useSelector(getUserMessage);
 
   const validateForm = () => {
     let validationErrors = {};
@@ -23,21 +32,8 @@ const LoginForm = ({ onSubmit }) => {
     return Object.keys(validationErrors).length === 0;
   };
 
-  const login = async (credentials) => {
-    const response = await fetch(`http://localhost:3000/api/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(credentials),
-      credentials: "include",
-    });
-
-    const result = await response.json();
-    if (!response.ok || !result.success) {
-      throw new Error(result.message || "Login failed");
-    }
-    return result;
+  const login = (credentials) => {
+    dispatch(loginCredentials(credentials));
   };
 
   const handleSubmit = async (e) => {
@@ -48,13 +44,18 @@ const LoginForm = ({ onSubmit }) => {
       return;
     }
 
-    toast.promise(login(formData), {
-      loading: "Logging in...",
-      success: <b>Login successful!</b>,
-      error: (err) => (
-        <b>{err.message || "Could not log in. Please try again."}</b>
-      ),
-    });
+    const data = {
+      email: formData.email,
+      password: formData.password,
+    };
+
+    dispatch(loginCredentials(data));
+
+    if (!error) {
+      toast.success("Login successful!");
+    } else {
+      toast.error(message);
+    }
   };
 
   return (

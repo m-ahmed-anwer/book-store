@@ -1,29 +1,32 @@
 import express from "express";
 import { UserAuth } from "../middleware/auth.js";
 import { RemoveFromCart } from "../service/remove-item-cart.js";
+import mongoose from "mongoose";
 
 const router = express.Router();
 
-router.delete("/delete/:itemId", UserAuth, async (req, res, next) => {
-  const customerId = req.user.id;
+router.delete("/delete/:userId/:itemId", async (req, res, next) => {
+  const { userId } = req.params;
   const { itemId } = req.params;
 
-  if (!itemId) {
-    return res.status(400).json({ message: "Item ID is required" });
+  if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).send({ message: "Invalid user id", success: false });
   }
 
-  try {
-    const response = await RemoveFromCart(customerId, itemId);
+  if (!itemId || !mongoose.Types.ObjectId.isValid(itemId)) {
+    return res.status(400).json({ message: "Invalid item id", success: false });
+  }
 
-    if (response.success) {
-      return res.status(200).json({ message: response.message });
-    } else {
-      return res.status(404).json({ message: response.message });
-    }
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Server error while removing item from cart", error });
+  const response = await RemoveFromCart(userId, itemId);
+
+  if (response.success) {
+    return res.status(200).json({
+      message: response.message,
+      success: true,
+      data: response.cartData,
+    });
+  } else {
+    return res.status(404).json({ message: response.message, success: false });
   }
 });
 

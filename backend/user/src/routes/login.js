@@ -20,10 +20,13 @@ router.post(
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
+      const errorMessages = errors
+        .array()
+        .map((error) => error.msg)
+        .join(", ");
       return res.status(400).json({
-        errors: errors
-          .array()
-          .map((err) => ({ message: err.msg, field: err.param })),
+        message: errorMessages,
+        success: false,
       });
     }
 
@@ -33,7 +36,8 @@ router.post(
       const existingUser = await User.User.findOne({ email });
       if (!existingUser) {
         return res.status(401).json({
-          error: "Invalid email or password",
+          message: "Invalid email or password",
+          success: false,
         });
       }
 
@@ -43,7 +47,8 @@ router.post(
       );
       if (!passwordsMatch) {
         return res.status(401).json({
-          error: "Invalid password",
+          message: "Invalid password",
+          success: false,
         });
       }
 
@@ -68,14 +73,18 @@ router.post(
 
       res.status(200).json({
         message: "Login successful",
+        success: true,
         user: {
           id: existingUser.id,
           email: existingUser.email,
+          name: existingUser.name,
           image: existingUser.image,
         },
       });
     } catch (error) {
-      res.status(500).send({ message: "Internal server error" });
+      res
+        .status(500)
+        .send({ message: "Internal server error", success: false });
     }
   }
 );

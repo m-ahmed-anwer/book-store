@@ -1,65 +1,58 @@
 "use client";
+
 import { useEffect, useState } from "react";
+import { IoSunnyOutline, IoMoonOutline } from "react-icons/io5";
 
 const ThemeToggle = () => {
-  const [theme, setTheme] = useState(
-    typeof window !== "undefined" && localStorage.getItem("theme")
-      ? localStorage.getItem("theme")
-      : "light"
-  );
+  const [theme, setTheme] = useState("light");
 
+  // Set theme based on saved preference or system preference
   useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.setAttribute("data-theme", "dark");
-    } else {
-      document.documentElement.setAttribute("data-theme", "light");
-    }
-    localStorage.setItem("theme", theme);
-  }, [theme]);
+    const savedTheme = localStorage.getItem("theme");
+    const prefersDarkMode = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
 
-  const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
+    const initialTheme = savedTheme || (prefersDarkMode ? "dark" : "light");
+    setTheme(initialTheme);
+    document.body.classList.toggle("dark", initialTheme === "dark");
+
+    // Listener for system preference changes
+    const themeListener = (e) => {
+      const systemTheme = e.matches ? "dark" : "light";
+      setTheme(systemTheme);
+      document.body.classList.toggle("dark", systemTheme === "dark");
+      localStorage.setItem("theme", systemTheme);
+    };
+
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    mediaQuery.addEventListener("change", themeListener);
+
+    return () => {
+      mediaQuery.removeEventListener("change", themeListener);
+    };
+  }, []);
+
+  // Toggle theme manually
+  const darkModeHandler = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.body.classList.toggle("dark", newTheme === "dark");
   };
 
   return (
-    <div>
-      <label className="flex cursor-pointer gap-2">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <circle cx="12" cy="12" r="5" />
-          <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
-        </svg>
-        <input
-          type="checkbox"
-          value="synthwave"
-          className="toggle theme-controller"
-          checked={theme === "dark"}
-          onChange={toggleTheme}
-        />
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-      </label>
-    </div>
+    <button
+      onClick={darkModeHandler}
+      className="swap swap-rotate flex items-center justify-center p-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 transition duration-300 ease-in-out"
+      aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+    >
+      {theme === "light" ? (
+        <IoMoonOutline className="text-2xl" />
+      ) : (
+        <IoSunnyOutline className="text-2xl" />
+      )}
+    </button>
   );
 };
 

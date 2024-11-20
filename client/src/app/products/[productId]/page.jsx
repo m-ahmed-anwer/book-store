@@ -1,29 +1,38 @@
-import React from "react";
-import books from "@/data/books";
+"use client";
+
+import React, { useEffect } from "react";
 import Link from "next/link";
 import AddToCartButton from "@/components/add-to-cart";
 import Image from "next/image";
+import { useParams } from "next/navigation";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchPosts, selectPostById } from "@/store/postSlice";
 
-const ProductPage = async ({ params }) => {
-  const { productId } = await params;
+const ProductPage = () => {
+  const { productId } = useParams();
+  const dispatch = useDispatch();
 
-  const product = books.find((book) => book.id === parseInt(productId));
+  useEffect(() => {
+    dispatch(fetchPosts());
+  }, [dispatch]);
 
-  if (!product) {
+  const post = useSelector((state) => selectPostById(state, productId));
+
+  if (!post) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-8 bg-base-200 text-center">
         <h1 className="text-4xl font-bold mb-4">Product Not Found</h1>
         <p className="text-lg text-gray-600 mb-6">
           {`We're sorry, but the product you're looking for does not exist.`}
         </p>
-        <Link href={"/products"} className="btn btn-primary">
+        <Link href="/products" className="btn btn-primary">
           Go Back to Products
         </Link>
       </div>
     );
   }
 
-  const { title, author, price, description, image } = product;
+  const { title, author, price, description, image } = post;
 
   return (
     <div className="min-h-screen flex items-center justify-center p-8 bg-base-200">
@@ -33,19 +42,21 @@ const ProductPage = async ({ params }) => {
             src={image}
             width={500}
             height={500}
-            alt={`image`}
+            alt="Product Image"
             className="w-full rounded-lg shadow-md"
+            priority
           />
         </div>
+
         <div className="md:w-1/2 p-4 space-y-4">
           <h1 className="text-2xl font-bold">{title}</h1>
-          <h2 className="text-lg text-gray-600 dark:text-gray-530">{author}</h2>
-          <p className="text-xl ">${price}</p>
-          <p className="text-gray-700  dark:text-gray-500 pb-10">
+          <h2 className="text-lg text-gray-600 dark:text-gray-500">{author}</h2>
+          <p className="text-xl">${price}</p>
+          <p className="text-gray-700 dark:text-gray-400 pb-10">
             {description}
           </p>
 
-          <AddToCartButton product={product} />
+          <AddToCartButton product={post} />
         </div>
       </div>
     </div>
